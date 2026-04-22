@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Rental</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+
+    <h1>Add Rental</h1>
+
+    <form method="POST">
+        {% csrf_token %}
+
+        <label for="renter_id">Renter ID:</label>
+        <input type="number" name="renter_id" min="1" step="1" required>
+
+        <label for="cost">Monthly Cost:</label>
+        <input type="number" name="cost" min="501" required>
+
+        <label for="aid">Apartment ID:</label>
+        <select name="aid" required>
+            {% for apartment in apartments %}
+            <option value="{{ apartment.aid }}">{{ apartment.aid }}</option>
+            {% endfor %}
+        </select>
+
+        <button type="submit">Submit</button>
+    </form>
+
+    {% if message %}
+        <p class="message">{{ message }}</p>
+    {% endif %}
+    {% if error %}
+        <p class="message" style="background-color: #f8d7da; color: #721c24;">{{ error }}</p>
+    {% endif %}
+
+    <div class="nav-buttons">
+        <a href="/" class="nav-button">Home Page</a>
+        <a href="/query_results" class="nav-button">Query Results</a>
+        <a href="/search_analysis" class="nav-button">Search and Analysis</a>
+    </div>
+
+</body>
+</html>

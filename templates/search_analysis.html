@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Search and Analysis</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+
+    <h1>Search and Analysis</h1>
+
+    <!-- Find Owner -->
+    <h2>Find Owner</h2>
+    <img src="{% static 'magnifier.jpg' %}" alt="Magnifier Image" style="float: left; width: 100px; margin: 10px;">
+    <form method="get">
+        <label for="name_prefix">Name prefix:</label>
+        <input type="text" name="name_prefix" value="{{ name_prefix|default:'' }}">
+        <button type="submit" name="search_type" value="find">Submit</button>
+    </form>
+
+    {% if owners %}
+        <table>
+            <tr>
+                <th>Owner ID</th>
+                <th>Name</th>
+            </tr>
+            {% for owner in owners %}
+            <tr>
+                <td>{{ owner.ownerid }}</td>
+                <td>{{ owner.oname }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    {% elif name_prefix %}
+        <p>No owners found with that prefix.</p>
+    {% endif %}
+
+    <hr>
+
+    <!-- Analyze Owner -->
+    <h2>Analyze Owner</h2>
+    <img src="{% static 'magnifier.jpg' %}" alt="Magnifier Image" style="float: left; width: 100px; margin: 10px;">
+    <form method="get">
+        <label for="owner_id">Owner ID:</label>
+        <input type="number" name="owner_id" value="{{ owner_id|default:'' }}">
+        <button type="submit" name="search_type" value="analyze">Submit</button>
+        
+    </form>
+
+    {% if owner_stats %}
+        <p><strong>Number of Apartments:</strong> {{ owner_stats.num_apartments }}</p>
+        <p><strong>Average Roommates (same city):</strong> {{ owner_stats.avg_roommates }}</p>
+        <p><strong>Other owners living in same city:</strong> {{ owner_stats.num_owners_in_city }}</p>
+    {% elif owner_id %}
+        <p>No statistics found for this owner.</p>
+    {% endif %}
+
+    {% if error %}
+        <p class="message" style="background-color: #f8d7da; color: #721c24;">{{ error }}</p>
+    {% endif %}
+
+    <div class="nav-buttons">
+        <a href="/" class="nav-button">Home Page</a>
+        <a href="/query_results" class="nav-button">Query Results</a>
+        <a href="/add_rental" class="nav-button">Add Rental</a>
+    </div>
+
+</body>
+</html>

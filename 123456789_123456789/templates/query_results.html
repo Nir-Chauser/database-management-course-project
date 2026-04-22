@@ -1,0 +1,96 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Query Results - Rentals App</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body style="font-family: Arial; text-align: center; background-color: #f2f2f2; padding: 20px;">
+
+    <h1>Query Results</h1>
+    <p>This page displays the results of three complex SQL queries on the rental system database.</p>
+
+    <!-- Query 1 -->
+    <h2>Query 1: Highest Cost Renters Per Apartment</h2>
+    {% if query1_results %}
+    <table>
+        <thead>
+            <tr>
+                <th>Apartment ID</th>
+                <th>Renter ID</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for row in query1_results %}
+            <tr>
+                <td>{{ row.aID }}</td>
+                <td>{{ row.renterID }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p>No results found for Query 1.</p>
+    {% endif %}
+
+    <hr>
+
+    <!-- Query 2 -->
+    <h2>Query 2: Cities with Minimalist Rentals</h2>
+    {% if query2_results %}
+    <table>
+        <thead>
+            <tr>
+                <th>City</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for row in query2_results %}
+            <tr>
+                <td>{{ row.city }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p>No results found for Query 2.</p>
+    {% endif %}
+
+    <hr>
+
+    <!-- Query 3 -->
+    <h2>Query 3: Diverse Owners with Problematic Rentals</h2>
+    {% if query3_results %}
+    <table>
+        <thead>
+            <tr>
+                <th>Owner Name</th>
+                <th>Birth Date</th>
+                <th>Problematic Apartments</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for row in query3_results %}
+            <tr>
+                <td>{{ row.oName }}</td>
+                <td>{{ row.bDate }}</td>
+                <td>{{ row.problematic_apartments }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p>No results found for Query 3.</p>
+    {% endif %}
+
+    <hr>
+
+    <div class="nav-buttons">
+        <a href="/" class="nav-button">Home</a>
+        <a href="/add_rental" class="nav-button">Add Rental</a>
+        <a href="/search_analysis" class="nav-button">Search & Analysis</a>
+    </div>
+
+</body>
+</html>
